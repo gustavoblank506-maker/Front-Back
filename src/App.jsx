@@ -1,45 +1,91 @@
-return (
-  <>
-    <h1>Cadastro de Pessoa</h1>
+import { useState } from 'react';
+import './index.css';
 
-    <form onSubmit={handleSubmit}>
-      <label>
-        Nome:
-        <input
-          type="text"
-          name="nome"
-          value={formValores.nome}
-          onChange={handleChange}
-        />
-      </label>
+function App() {
 
-      <br />
+  const [formValores, setFormValores] = useState({
+    nome: '',
+    idade: '',
+    cpf: '',
+    anoNascimento:''
+  });
 
-      <label>
-        Idade:
-        <input
-          type="number"
-          name="idade"
-          value={formValores.idade}
-          onChange={handleChange}
-        />
-      </label>
+  const handleChange = (e) => {
+    setFormValores({
+      ...formValores,
+      [e.target.name]: e.target.value
+    });
+  };
 
-      <br />
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-      <label>
-        CPF:
-        <input
-          type="text"
-          name="cpf"
-          value={formValores.cpf}
-          onChange={handleChange}
-        />
-      </label>
+    try {
+      console.log("Dados a serem enviados:", formValores);
 
-      <br />
+      const response = await fetch('http://localhost:3000/cadastrarPessoa', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formValores)
+      });
 
-      <button type="submit">Cadastrar</button>
-    </form>
-  </>
-);
+      const json = await response.json();
+
+      console.log(response);
+      console.log(json);
+
+      alert(json.mensagem);
+
+    } catch (err) {
+      console.error("Erro ao enviar", err);
+    }
+  };
+
+  return (
+    <>
+      <h1>Cadastro de Pessoa</h1>
+
+      <form onSubmit={handleSubmit}>
+
+        <label>
+          Nome:
+          <input
+            type="text"
+            name="nome"
+            value={formValores.nome}
+            onChange={handleChange}
+          />
+        </label>
+
+        <label>
+          Idade:
+          <input
+            type="number"
+            name="idade"
+            value={formValores.idade}
+            onChange={handleChange}
+          />
+        </label>
+
+        <label>
+          CPF:
+          <input
+            type="text"
+            name="cpf"
+            value={formValores.cpf}
+            onChange={handleChange}
+          />
+        </label>
+
+        <button type="submit">
+          Cadastrar
+        </button>
+
+      </form>
+    </>
+  );
+}
+
+export default App;

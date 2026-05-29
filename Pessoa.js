@@ -15,7 +15,7 @@ class Pessoa {
     }
 
     #calcularIdadeAtual(anoAtual) {
-        return anoAtual - this.#anoNascimento;
+        return anoAtual - Number(this.#anoNascimento);
     }
 
     mostrarInformacoes() {

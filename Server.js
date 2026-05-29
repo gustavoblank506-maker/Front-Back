@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import Pessoa from './src/Pessoa.js';
+import Pessoa from './Pessoa.js';
 
 const app = express();
 
@@ -21,7 +21,6 @@ app.post('/cadastrarPessoa', (req, res) => {
     novaPessoa.mostrarInformacoes();
 
     res.status(201).json({
-
         mensagem: 'Pessoa cadastrada com sucesso',
 
         pessoa: {
@@ -33,7 +32,5 @@ app.post('/cadastrarPessoa', (req, res) => {
 });
 
 app.listen(3000, () => {
-
     console.log('Servidor rodando na porta 3000');
-
 });
